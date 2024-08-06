@@ -99,4 +99,5 @@
 .track-card{
   background-image: var(--imageUrl);
   background-size: cover;
+  background-position: center;
 }
