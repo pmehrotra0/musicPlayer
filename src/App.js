@@ -1,24 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import SideBar from './components/SideBar';
+import MainList from './components/MainList';
+import PlayerContainer from './components/PlayerContainer';
+import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import ErrorBoundary from './components/ErrorBoundry';
 
 function App() {
+  const [accent, setAccent] = useState('#1e1407');
+  const { activeSong } = useSelector((state) => state.player);
+
+  useEffect(() => {
+    if(Object.keys(activeSong).length !== 0){
+      setAccent(activeSong.accent)
+    }
+  },[activeSong])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ErrorBoundary>
+      <div style={{'--bgColor': accent}} className={`container flex md:flex-row custom-background h-screen max-w-[100vw] overflow-y-scroll text-white max-sm:flex-col`}>
+        <SideBar/>
+        <MainList/>
+        <PlayerContainer/>
+      </div>
+    </ErrorBoundary>
+    
   );
 }
 
